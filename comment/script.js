@@ -3,7 +3,12 @@ class CommentBox extends React.Component {
     super();
 
     this.state = {
-      visible: true
+      visible: true,
+      comments: [
+        { id: 1, author: 'Dale', body: 'Practice makes perfect!'},
+        { id: 2, author: 'Kate', body: 'Music is my life.\r\nShow me the money'},
+        { id: 3, author: 'Tom', body: 'I wanna know what love is...'}
+      ]
     };
   }
 
@@ -25,18 +30,14 @@ class CommentBox extends React.Component {
             {this._getCommentsTitle(comments.length)} <button type="button" onClick={this._toggle.bind(this)} className="btn btn-default">{buttonText}</button>
           </h3>
         </div>
+        <CommentForm addComment={this._addComment.bind(this)}/>
         {commentNodes}
       </div>
     );
   }
 
   _getComments() {
-    const commentList = [
-      { id: 1, author: 'Dale', body: 'Practice makes perfect!'},
-      { id: 2, author: 'Kate', body: 'Music is my life.\r\nShow me the money'},
-      { id: 3, author: 'Tom', body: 'I wanna know what love is...'}
-    ];
-    return commentList.map(comment => <Comment author={comment.author} body={comment.body} key={comment.id}/>);
+    return this.state.comments.map(comment => <Comment author={comment.author} body={comment.body} key={comment.id}/>);
   }
 
   _getCommentsTitle(commentCount) {
@@ -49,6 +50,44 @@ class CommentBox extends React.Component {
     this.setState({
       visible: !this.state.visible
     });
+  }
+
+  _addComment(author, body) {
+    const comment = {
+      id: this.state.comments.length + 1,
+      author,
+      body
+    }
+    this.setState({comments: this.state.comments.concat([comment])});
+  }
+}
+
+class CommentForm extends React.Component {
+  render() {
+    return (
+      <div className="well">
+        <form onSubmit={this._submit.bind(this)}>
+          <div className="form-group">
+            <label className="sr-only" for="author">Author</label>
+            <input ref={input => this._author = input} type="input" className="form-control" id="author" placeholder="Author"/>
+          </div>
+          <div className="form-group">
+            <label className="sr-only" for="body">Body</label>
+            <textarea ref={textarea => this._body = textarea} row="3" className="form-control" id="body" placeholder="Body"></textarea>
+          </div>
+          <button type="submit" className="btn btn-default">Post Comment</button>
+        </form>
+      </div>
+    );
+  }
+
+  _submit(event) {
+    event.preventDefault();
+
+    let author = this._author;
+    let body = this._body;
+
+    this.props.addComment(author.value, body.value);
   }
 }
 
