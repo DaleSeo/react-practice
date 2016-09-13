@@ -84,6 +84,11 @@ class CommentForm extends React.Component {
   _submit(event) {
     event.preventDefault();
 
+    if (!this._author.value || !this._body.value) {
+      alert("Please enter your name and comment");
+      return;
+    }
+
     let author = this._author;
     let body = this._body;
 
