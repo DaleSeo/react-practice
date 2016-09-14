@@ -4,12 +4,32 @@ class CommentBox extends React.Component {
 
     this.state = {
       visible: true,
-      comments: [
-        { id: 1, author: 'Dale', body: 'Practice makes perfect!'},
-        { id: 2, author: 'Kate', body: 'Music is my life.\r\nShow me the money'},
-        { id: 3, author: 'Tom', body: 'I wanna know what love is...'}
-      ]
+      comments: []
     };
+  }
+
+  componentWillMount() {
+    this._fetchComments();
+  }
+
+  componentDidMount() {
+    this._timer = setInterval(() => this._fetchComments(), 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._timer);
+  }
+
+  _fetchComments() {
+    $.ajax({
+      method: 'GET',
+      url: 'comments.json',
+      success: (comments) => {
+        this.setState({
+          comments: comments
+        });
+      }
+    });
   }
 
   render() {
@@ -37,7 +57,13 @@ class CommentBox extends React.Component {
   }
 
   _getComments() {
-    return this.state.comments.map(comment => <Comment author={comment.author} body={comment.body} key={comment.id}/>);
+    return this.state.comments.map(comment => <Comment
+      author={comment.author}
+      body={comment.body}
+      key={comment.id}
+      id={comment.id}
+      onDelete={this._deleteComment.bind(this)}
+      />);
   }
 
   _getCommentsTitle(commentCount) {
@@ -59,6 +85,19 @@ class CommentBox extends React.Component {
       body
     }
     this.setState({comments: this.state.comments.concat([comment])});
+  }
+
+  _deleteComment(commentID) {
+    // $.ajax({
+    //   method: 'DELETE',
+    //   url: 'comments.json'
+    // });
+
+    const comments = this.state.comments.filter(
+      comment => comment.id !== commentID
+    );
+
+    this.setState({ comments });
   }
 }
 
@@ -102,13 +141,20 @@ class Comment extends React.Component {
       <div className="panel panel-default">
         <div className="panel-heading">
           <div className="btn-group pull-right">
-            <button type="button" className="btn btn-danger"><i className="fa fa-trash"></i></button>
+            <button type="button" className="btn btn-danger" onClick={this._delete.bind(this)}><i className="fa fa-trash"></i></button>
           </div>
           <h4>{this.props.author}</h4>
         </div>
         <div className="panel-body">{this.props.body}</div>
       </div>
     );
+  }
+
+  _delete(event) {
+    event.preventDefault();
+    if (confirm('Are you sure?')) {
+      this.props.onDelete(this.props.id);
+    }
   }
 }
 
