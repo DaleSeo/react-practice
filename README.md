@@ -20,3 +20,6 @@
 
 ## [Forms](https://facebook.github.io/react/docs/forms.html)
 - [quick-start/forms](quick-start/forms)
+
+## [Lifting State Up](https://facebook.github.io/react/docs/lifting-state-up.html)
+- [quick-start/lifting-state-up](quick-start/lifting-state-up)
