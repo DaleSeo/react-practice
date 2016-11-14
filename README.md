@@ -29,6 +29,7 @@
 ### [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 - [quick-start/thinking-in-react](quick-start/thinking-in-react)
 
-
-## [Tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
+### [Tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
 - [tutorial](tutorial)
+
+## [Learn Code Academy](https://www.youtube.com/watch?v=MhkGQAoc7bc)
