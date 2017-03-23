@@ -26,6 +26,9 @@
 ### [Lifting State Up](https://facebook.github.io/react/docs/lifting-state-up.html)
 - [quick-start/lifting-state-up](quick-start/lifting-state-up)
 
+### [Composition vs Inheritance](https://facebook.github.io/react/docs/composition-vs-inheritance.html)
+- [quick-start/composition-vs-inheritance](quick-start/composition-vs-inheritance)
+
 ### [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 - [quick-start/thinking-in-react](quick-start/thinking-in-react)
 
